@@ -12,16 +12,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Compile LaTeX
-      uses: xu-cheng/latex-action@v2
-      with:
-        root_file: main.tex
-        args: >
-          -shell-escape
-          -synctex=1
-          -interaction=nonstopmode
-        recipes: |
-          makeglossaries %
-          biber %
+      run: |
+        pdflatex -shell-escape -synctex=1 -interaction=nonstopmode main.tex
+        makeglossaries main
+        biber main
+        pdflatex -shell-escape -synctex=1 -interaction=nonstopmode main.tex
+        pdflatex -shell-escape -synctex=1 -interaction=nonstopmode main.tex
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
