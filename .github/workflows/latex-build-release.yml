@@ -1,0 +1,40 @@
+name: Compile LaTeX and Make Release on Tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Compile LaTeX
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: main.tex
+        args: >
+          -shell-escape
+          -synctex=1
+          -interaction=nonstopmode
+        packages: |
+          glossaries
+          biber
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: Auto-generated release for tag ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload PDF
+      uses: actions/upload-artifact@v2
+      with:
+        name: main.pdf
+        path: main.pdf
