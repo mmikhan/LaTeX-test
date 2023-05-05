@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Compile LaTeX
       uses: xu-cheng/latex-action@v2
       with:
@@ -28,28 +28,13 @@ jobs:
           %;
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
-    - name: Upload PDF
-      uses: actions/upload-artifact@v2
-      with:
-        name: main.pdf
-        path: main.pdf
-        if-no-files-found: error
     - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
+        files: main.pdf
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body: |
-          Auto-generated release for tag ${{ github.ref }}
-          {% if github.event_name == 'pull_request' %}
-          Pull request associated with this release:
-          - #{{ github.event.pull_request.number }}: {{ github.event.pull_request.title }} ({{ github.event.pull_request.html_url }})
-          {% endif %}
+        name: ${{ github.ref }}
+        body: Auto-generated release for tag ${{ github.ref }}
         draft: false
         prerelease: false
-        files:
-          - name: main
-            path: main.pdf
