@@ -15,13 +15,13 @@ jobs:
       uses: xu-cheng/latex-action@v2
       with:
         root_file: main.tex
+        compiler: pdflatex
         args: >
           -synctex=1
           -interaction=nonstopmode
           -file-line-error
           -halt-on-error
-          -g
-          pdflatex -synctex=1 -interaction=nonstopmode main.tex
+          main.tex
           %;
           makeglossaries %
           biber %
