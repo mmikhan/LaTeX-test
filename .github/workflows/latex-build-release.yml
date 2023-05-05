@@ -34,9 +34,7 @@ jobs:
       with:
         files: main.pdf
         tag_name: ${{ github.ref }}
-        name: ${{ github.ref }}
-        body: |
-          ${{ github.event.release.body }}
-          ${{ join(github.event.release.pull_requests.*.html_url, '\n') }}
+        name: Release ${{ github.ref }}
+        body: This is an auto-generated release. Please download the PDF from the assets.
         draft: false
         prerelease: false
