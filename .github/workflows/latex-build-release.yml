@@ -31,9 +31,9 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-        files: main.pdf
+        files: main-${{ github.ref_name }}.pdf
         tag_name: ${{ github.ref }}
         name: Release ${{ github.ref_name }}
-        body: Auto-generated release for tag ${{ github.ref }}
+        body: Auto-generated release for tag ${{ github.ref_name }}
         draft: false
         prerelease: false
