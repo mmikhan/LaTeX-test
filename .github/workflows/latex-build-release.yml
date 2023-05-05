@@ -22,16 +22,14 @@ jobs:
           -file-line-error
           -halt-on-error
           main.tex
-          %;
-          makeglossaries %
-          biber %
-          %;
+          makeglossaries
+          biber
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-        files: main-${{ github.ref_name }}.pdf
+        files: main.pdf
         tag_name: ${{ github.ref }}
         name: Release ${{ github.ref_name }}
         body: Auto-generated release for tag ${{ github.ref_name }}
