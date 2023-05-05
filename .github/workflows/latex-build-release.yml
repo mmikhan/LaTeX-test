@@ -15,8 +15,6 @@ jobs:
       uses: xu-cheng/latex-action@v2
       with:
         root_file: main.tex
-        args: >
-          -pdf -file-line-error -halt-on-error -interaction=nonstopmode; makeglossaries main; biber main
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
