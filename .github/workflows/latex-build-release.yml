@@ -21,12 +21,10 @@ jobs:
           -interaction=nonstopmode
           -file-line-error
           -halt-on-error
-          --shell-escape
-          --output-directory=build
           main.tex
           %;
-          makeglossaries -d=build main.tex %
-          biber --output_directory=build main.tex %
+          makeglossaries %
+          biber %
           %;
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
@@ -37,6 +35,8 @@ jobs:
         files: main.pdf
         tag_name: ${{ github.ref }}
         name: ${{ github.ref }}
-        body: Auto-generated release for tag ${{ github.ref }}
+        body: |
+          ${{ github.event.release.body }}
+          ${{ join(github.event.release.pull_requests.*.html_url, '\n') }}
         draft: false
         prerelease: false
