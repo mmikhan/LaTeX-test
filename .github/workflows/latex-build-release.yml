@@ -21,10 +21,12 @@ jobs:
           -interaction=nonstopmode
           -file-line-error
           -halt-on-error
+          --shell-escape
+          --output-directory=build
           main.tex
           %;
-          makeglossaries %
-          biber %
+          makeglossaries -d=build main.tex %
+          biber --output_directory=build main.tex %
           %;
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
