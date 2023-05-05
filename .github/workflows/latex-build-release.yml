@@ -22,10 +22,8 @@ jobs:
           -file-line-error
           -halt-on-error
           main.tex
-          %;
-          makeglossaries main %
-          biber main %
-          %;
+          makeglossaries main
+          biber main
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
     - name: Release
