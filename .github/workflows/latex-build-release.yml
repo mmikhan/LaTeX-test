@@ -28,12 +28,12 @@ jobs:
           %;
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
           pdflatex -synctex=1 -interaction=nonstopmode main.tex
-    - name: Create Release
+    - name: Release
       uses: softprops/action-gh-release@v1
       with:
         files: main.pdf
         tag_name: ${{ github.ref }}
-        name: Release ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
         body: Auto-generated release for tag ${{ github.ref }}
         draft: false
         prerelease: false
